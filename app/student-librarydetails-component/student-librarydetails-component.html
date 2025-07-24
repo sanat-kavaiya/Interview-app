@@ -1,0 +1,57 @@
+<!-- student-librarydetails.component.html -->
+<div class="library-form-container">
+  <h2> {{isLoginMode ? 'View Registered Students' : 'Student Register' }}</h2>
+  <h3 [style.color]="'green'">{{ExtraMessage}}</h3>
+    <!-- Toggle between Register/Login -->
+  <div class="form-group btn-group mb-3">
+    <button type="button" class="btn"
+            [class.btn-primary]="!isLoginMode" 
+            [class.btn-outline-primary]="isLoginMode"
+            (click)="toggleMode(false)">
+      Register
+    </button>
+    <button type="button" class="btn" 
+            [class.btn-primary]="isLoginMode" 
+            [class.btn-outline-primary]="!isLoginMode"
+            (click)="toggleMode(true)">
+      View Registered Students
+    </button>
+  </div>
+  <form [formGroup]="StudentForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="studentName">Student Name:</label>
+      <input type="text" id="studentName" formControlName="studentName" class="form-control">
+    </div>
+
+    
+    <div class="form-group">
+      <label for="Password">Password:</label>
+      <input type="text" id="Password" formControlName="Password" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="EmployeeName">Employment Type:</label>
+        <select id="employeeType" formControlName="EmployeeName" class="form-control" [disabled]="isLoginMode" >
+    <option value="">-- Select Employment Type --</option>
+    <option *ngFor="let type of employmentTypes" [value]="type.empId">
+      {{ type.designation + '( ' +type.empName+')' }}
+    </option>
+  </select>
+    </div>
+
+    <div class="form-group">
+      <label for="CompanyName">Company Name:</label>
+       <select id="CompanyName" formControlName="CompanyName" class="form-control">
+    <option value="">-- Select Company Name --</option>
+    <option *ngFor="let type of companies" [value]="type.company_id">
+      {{ type.company_name }}
+    </option>
+  </select>
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!StudentForm.valid">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="onClear()">Clear</button>
+    </div>
+  </form>
+</div>
